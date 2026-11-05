@@ -1,15 +1,21 @@
 # Transcritor de Áudio e Vídeo para Texto (pt-BR)
 
+## ⬇️ Baixar para Windows
+
+**[Baixar o Transcritor v1.0.0 para Windows 64 bits (.zip, 1,35 GB)](https://github.com/ricardomendes95/transcritor/releases/latest/download/Transcritor-v1.0.0-windows-x64.zip)**
+
+1. Extraia a pasta inteira do `.zip`.
+2. Instale o FFmpeg, que é obrigatório: `winget install Gyan.FFmpeg`.
+3. Abra `Transcritor.exe`.
+
+O Windows SmartScreen pode alertar porque o app não é assinado: clique em "Mais informações" e "Executar assim mesmo". Veja todas as versões em [Releases](https://github.com/ricardomendes95/transcritor/releases).
+
 Transcrição de áudio ou vídeo para texto 100% local, usando [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (Whisper otimizado com CTranslate2). Nenhum áudio é enviado para serviços externos.
 
 Formatos de áudio aceitos: `.ogg`, `.mp3`, `.wav`, `.m4a`, `.flac`, `.aac`, `.wma`, `.opus`.
 Formatos de vídeo aceitos: `.mp4`, `.mkv`, `.webm`, `.avi`, `.mov`, `.wmv`, `.flv`, `.m4v`, `.3gp`, `.mpg`, `.mpeg` (o FFmpeg extrai a trilha de áudio automaticamente, sem precisar converter antes).
 
 Testado neste projeto com: Python 3.11, Windows 11, GPU NVIDIA RTX 3050 Laptop (4 GB VRAM).
-
-## Baixar o programa pronto (Windows)
-
-Baixe o `.zip` da [última release](https://github.com/ricardomendes95/transcritor/releases/latest), extraia a pasta inteira, instale o FFmpeg (`winget install Gyan.FFmpeg`) e abra `Transcritor.exe`. O Windows SmartScreen pode alertar porque o app não é assinado: clique em "Mais informações" e "Executar assim mesmo".
 
 ## Instalar a partir do código (Windows)
 
