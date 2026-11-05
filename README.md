@@ -7,17 +7,39 @@ Formatos de vídeo aceitos: `.mp4`, `.mkv`, `.webm`, `.avi`, `.mov`, `.wmv`, `.f
 
 Testado neste projeto com: Python 3.11, Windows 11, GPU NVIDIA RTX 3050 Laptop (4 GB VRAM).
 
+## Início rápido (Windows)
+
+Com Python 3.11, FFmpeg e Git instalados (seções 1 e 2):
+
+```powershell
+git clone https://github.com/ricardomendes95/transcritor.git
+cd transcritor
+python -m venv venv
+venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+.\build.bat
+```
+
+O programa fica em `dist\Transcritor\Transcritor.exe`. A instalação baixa cerca de 3 GB de dependências, e o modelo escolhido é baixado na primeira transcrição.
+
 ## Estrutura
 
 ```
-transcritor-audio-txt/
-├── transcrever.py
+transcritor/
+├── transcrever.py         # motor de transcrição e linha de comando
+├── transcrever_gui.py     # interface gráfica
+├── transcrever.bat        # transcreve o arquivo arrastado sobre ele
+├── transcrever_gui.bat    # abre a interface usando o venv
+├── build.bat              # gera o .exe
+├── transcritor.spec       # configuração do PyInstaller
 ├── requirements.txt
-├── README.md
-└── outputs/          # pasta livre para você guardar transcrições, se quiser
+├── requirements-build.txt
+├── assets/                # ícones
+└── README.md
 ```
 
-O `.txt` gerado sempre é salvo **na mesma pasta do áudio de origem**, não em `outputs/`.
+O `.txt` gerado é salvo **na mesma pasta do áudio de origem**, exceto se você usar `--saida` ou "Pasta de destino" na interface.
 
 ## 1. Instalar o Python
 
@@ -47,10 +69,11 @@ Se `winget` não estiver disponível, baixe o build em https://www.gyan.dev/ffmp
 
 ## 3. Criar o ambiente virtual
 
-Dentro da pasta do projeto:
+Baixe o projeto e crie o ambiente dentro da pasta dele:
 
 ```powershell
-cd C:\DEV\transcritor-audio-txt
+git clone https://github.com/ricardomendes95/transcritor.git
+cd transcritor
 python -m venv venv
 venv\Scripts\activate
 ```
@@ -60,11 +83,11 @@ Você verá `(venv)` no início do prompt quando estiver ativo.
 ## 4. Instalar as dependências
 
 ```powershell
-pip install --upgrade pip
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Isso instala `faster-whisper`, `ctranslate2==4.4.0` (combinação estável e testada com CUDA 12) as bibliotecas de CUDA e, para a interface gráfica, `customtkinter`, `pillow` e `tkinterdnd2`.
+Isso instala `faster-whisper`, `ctranslate2==4.4.0` (combinação estável e testada com CUDA 12), as bibliotecas de CUDA e, para a interface gráfica, `customtkinter`, `pillow` e `tkinterdnd2`.
 
 ## 5. Usar GPU NVIDIA (CUDA) — opcional, mas recomendado
 
@@ -91,7 +114,7 @@ venv\Scripts\activate
 ### Exemplo básico (usa modelo `medium`, escolhe GPU/CPU automaticamente)
 
 ```powershell
-python transcrever.py "audio de dani.ogg"
+python transcrever.py "C:\audios\reuniao.mp3"
 ```
 
 ### Especificando modelo e dispositivo
@@ -107,7 +130,7 @@ python transcrever.py "C:\audios\reuniao.mp3" --model small --device cpu
 ### Gerando TXT com timestamps
 
 ```powershell
-python transcrever.py "audio de dani.ogg" --timestamps
+python transcrever.py "C:\audios\reuniao.mp3" --timestamps
 ```
 
 Saída, por exemplo:
@@ -153,6 +176,8 @@ Rodar `build.bat` gera `dist\Transcritor\Transcritor.exe`, com ícone e sem depe
 | `large-v3-turbo`  | Excelente       | ~3-4 GB                | Rápida     | Qualidade alta cabendo em GPUs de 4 GB, como a desta máquina |
 | `large-v3`        | Excelente       | ~8-10 GB               | Lenta      | Só se houver VRAM sobrando (8+ GB) |
 
+O modelo é baixado do Hugging Face na primeira vez em que é usado e fica em cache para as próximas.
+
 Com uma RTX 3050 de 4 GB, `medium` e `large-v3-turbo` são as opções mais seguras. `large-v3` completo tende a estourar a VRAM disponível.
 
 ## Escolher entre CPU e GPU
@@ -167,7 +192,7 @@ No Windows, crie um atalho para arrastar arquivos direto sobre ele. Duas opçõe
 
 **Opção A — arquivo `.bat` (mais simples):**
 
-Crie `transcrever.bat` na mesma pasta com o conteúdo:
+O projeto já inclui `transcrever.bat`, com este conteúdo:
 
 ```bat
 @echo off
@@ -195,4 +220,4 @@ O script identifica e explica, sem travar de forma confusa:
 
 ## Sobre fidelidade da transcrição
 
-O script usa `temperature=0.0` e `condition_on_previous_text=False` para reduzir alucinações (o modelo "inventar" palavras), além de um filtro de VAD (`vad_filter=True`) para pular trechos de silêncio sem gerar linhas vazias e sem processar áudio desnecessário — importante para arquivos longos.
+O script usa `temperature=0.0` e `condition_on_previous_text=False` para reduzir alucinações (o modelo "inventar" palavras). O filtro de VAD, que pula trechos de silêncio, vem desligado por padrão porque pode cortar fala com música de fundo; ative-o com `--vad` ou pela opção na interface.
