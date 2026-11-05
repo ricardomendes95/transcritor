@@ -1,0 +1,26 @@
+# Ambiente e artefatos de build
+venv/
+__pycache__/
+*.pyc
+build/
+dist/
+
+# Áudios, vídeos e transcrições pessoais
+outputs/
+*.ogg
+*.mp3
+*.wav
+*.m4a
+*.flac
+*.aac
+*.wma
+*.opus
+*.mp4
+*.mkv
+*.webm
+*.avi
+*.mov
+*.txt
+*.srt
+!requirements.txt
+!requirements-build.txt
