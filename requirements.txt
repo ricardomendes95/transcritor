@@ -4,3 +4,5 @@ requests>=2.31.0
 customtkinter==6.0.0
 pillow>=13.0.0
 tkinterdnd2==0.7.0
+nvidia-cublas-cu12==12.9.2.10; sys_platform != "darwin"
+nvidia-cudnn-cu12==8.9.6.50; sys_platform != "darwin"

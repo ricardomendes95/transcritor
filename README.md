@@ -64,21 +64,11 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Isso instala `faster-whisper`, `ctranslate2==4.4.0` (combinação estável e testada com CUDA 12) e, para a interface gráfica, `customtkinter`, `pillow` e `tkinterdnd2`.
+Isso instala `faster-whisper`, `ctranslate2==4.4.0` (combinação estável e testada com CUDA 12) as bibliotecas de CUDA e, para a interface gráfica, `customtkinter`, `pillow` e `tkinterdnd2`.
 
 ## 5. Usar GPU NVIDIA (CUDA) — opcional, mas recomendado
 
-O CTranslate2 (motor por trás do faster-whisper) precisa das bibliotecas **cuBLAS** e **cuDNN** do CUDA 12 em tempo de execução. A forma mais simples no Windows é instalar essas bibliotecas via pip, sem precisar instalar o CUDA Toolkit completo:
-
-```powershell
-pip install nvidia-cublas-cu12 nvidia-cudnn-cu12==8.9.6.50
-```
-
-Depois, adicione as DLLs dessas bibliotecas ao PATH da sessão atual do PowerShell (ajuste `venv` se o caminho do seu ambiente virtual for diferente):
-
-```powershell
-$env:PATH = (Get-ChildItem "venv\Lib\site-packages\nvidia\*\bin" -Directory | ForEach-Object { $_.FullName }) -join ";" + ";$env:PATH"
-```
+O CTranslate2 (motor por trás do faster-whisper) precisa das bibliotecas **cuBLAS** e **cuDNN** do CUDA 12 em tempo de execução. Elas já vêm no `requirements.txt` (cerca de 2 GB), sem precisar instalar o CUDA Toolkit completo, e o script ajusta o PATH sozinho. No macOS elas não são instaladas, pois não há CUDA.
 
 Requisitos:
 - Driver NVIDIA atualizado (o driver já detectado nesta máquina, 581.57, é compatível com CUDA 12).
