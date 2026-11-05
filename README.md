@@ -7,7 +7,11 @@ Formatos de vídeo aceitos: `.mp4`, `.mkv`, `.webm`, `.avi`, `.mov`, `.wmv`, `.f
 
 Testado neste projeto com: Python 3.11, Windows 11, GPU NVIDIA RTX 3050 Laptop (4 GB VRAM).
 
-## Início rápido (Windows)
+## Baixar o programa pronto (Windows)
+
+Baixe o `.zip` da [última release](https://github.com/ricardomendes95/transcritor/releases/latest), extraia a pasta inteira, instale o FFmpeg (`winget install Gyan.FFmpeg`) e abra `Transcritor.exe`. O Windows SmartScreen pode alertar porque o app não é assinado: clique em "Mais informações" e "Executar assim mesmo".
+
+## Instalar a partir do código (Windows)
 
 Com Python 3.11, FFmpeg e Git instalados (seções 1 e 2):
 
@@ -221,3 +225,7 @@ O script identifica e explica, sem travar de forma confusa:
 ## Sobre fidelidade da transcrição
 
 O script usa `temperature=0.0` e `condition_on_previous_text=False` para reduzir alucinações (o modelo "inventar" palavras). O filtro de VAD, que pula trechos de silêncio, vem desligado por padrão porque pode cortar fala com música de fundo; ative-o com `--vad` ou pela opção na interface.
+
+## Licença
+
+[MIT](LICENSE).
